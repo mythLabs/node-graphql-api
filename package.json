@@ -1,0 +1,11 @@
+{
+  "name": "node-graphql-api",
+  "version": "1.0.0",
+  "description": "An api build with node, graphql and love.",
+  "main": "index.js",
+  "author": "mythLabs",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.16.9"
+  }
+}
