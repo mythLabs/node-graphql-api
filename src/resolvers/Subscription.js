@@ -11,4 +11,5 @@ function newLinkSubscribe(parent, args, context, info) {
   
   module.exports = {
     newLink,
+    newVote,
   }
