@@ -1,37 +1,32 @@
 const  { GraphQLServer } = require('graphql-yoga');
+const { prisma } = require('./generated/prisma-client')
 
 
 /* The resolvers object is the actual implementation of the GraphQL schema. 
 Notice how its structure is identical to the structure of the type definition inside typeDefs: 
 Query.info */
-let links = [{
-    id: 'link-0',
-    url: 'www.howtographql.com',
-    description: 'Fullstack tutorial for GraphQL'
-  }]
-  let idCount = links.length
 
-const resolvers = {
+  const resolvers = {
     Query: {
-       info: () => 'Very important data',
-       feed: () => links
+      info: () => `This is the API of a Hackernews Clone`,
+      feed: (root, args, context, info) => {
+        return context.prisma.links()
+      },
     },
     Mutation: {
-        post: (parent, args) => {
-           const link = {
-            id: `link-${idCount++}`,
-            description: args.description,
-            url: args.url,
-          }
-          links.push(link)
-          return link
-        }
-      }
-}
+      post: (root, args, context) => {
+        return context.prisma.createLink({
+          url: args.url,
+          description: args.description,
+        })
+      },
+    },
+  }
 
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers,
+    context: { prisma }
 })
 
 
