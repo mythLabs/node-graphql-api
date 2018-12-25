@@ -7,11 +7,15 @@ var models = [
   {
     name: "Link",
     embedded: false
+  },
+  {
+    name: "User",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `XXX`
+  endpoint: `XX`
 });
 exports.prisma = new exports.Prisma();
