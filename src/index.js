@@ -4,19 +4,37 @@ const  { GraphQLServer } = require('graphql-yoga');
 Here, it defines a simple Query type with one field called info. This field has the type String!. 
 The exclamation mark in the type definition means that this field can never be null*/
 const typeDefs = `
-{
     type Query {
         info: String!
+        feed: [Link!]!
     }
-}`
+
+    type Link {
+        id: ID!
+        description: String!
+        url: String!
+      }
+    `
 
 /* The resolvers object is the actual implementation of the GraphQL schema. 
 Notice how its structure is identical to the structure of the type definition inside typeDefs: 
 Query.info */
+let links = [{
+    id: 'link-0',
+    url: 'www.howtographql.com',
+    description: 'Fullstack tutorial for GraphQL'
+  }]
+
 const resolvers = {
     Query: {
-       info: () => `This is the  API of some important data`
-    }
+       info: () => 'Very important data',
+       feed: () => links
+    },
+    Link: {
+        id: (parent) => parent.id,
+        description: (parent) => parent.description,
+        url: (parent) => parent.url,
+      }
 }
 
 const server = new GraphQLServer({
